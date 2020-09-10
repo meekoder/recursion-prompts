@@ -360,6 +360,14 @@ let flatten = function(array) {
 // 31. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {p:1, o:2, t:2, a:1}
 let letterTally = function(str, obj) {
+  if (!obj) return letterTally(str, {});
+  if (str.length === 0) return obj;
+  if (!obj[str[0]]) {
+    obj[str[0]] = 1;
+  } else {
+    obj[str[0]]++;
+  }
+  return letterTally(str.slice(1), obj);
 };
 
 // 32. Eliminate consecutive duplicates in a list. If the list contains repeated
