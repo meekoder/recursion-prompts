@@ -412,6 +412,14 @@ let minimizeZeroes = function(array) {
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 let alternateSign = function(array) {
+  if (!array.length) return array;
+  let transformedElement = array[0];
+  if (array.length % 2 === 0) {
+    transformedElement = Math.abs(transformedElement);
+  } else if (array[0] > 0) {
+    transformedElement = transformedElement * -1;
+  }
+  return [transformedElement].concat(alternateSign(array.slice(1)));
 };
 
 // 36. Given a string, return a string with digits converted to their word equivalent.
