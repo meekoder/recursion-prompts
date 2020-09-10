@@ -361,7 +361,7 @@ let flatten = function(array) {
 // letterTally('potato'); // {p:1, o:2, t:2, a:1}
 let letterTally = function(str, obj) {
   if (!obj) return letterTally(str, {});
-  if (str.length === 0) return obj;
+  if (!str.length) return obj;
   if (!obj[str[0]]) {
     obj[str[0]] = 1;
   } else {
@@ -376,7 +376,17 @@ let letterTally = function(str, obj) {
 // compress([1,2,2,3,4,4,5,5,5]) // [1,2,3,4,5]
 // compress([1,2,2,3,4,4,2,5,5,5,4,4]) // [1,2,3,4,2,5,4]
 let compress = function(list) {
-};
+  // make copy of list
+  let compressed = list.slice();
+  // base case - if list length is less than or equal to 1 return list
+  if (list.length <= 1) return list;
+  // if the first element is equal to the second element, take off first element recurse
+  if (compressed[0] === compressed[1]) {
+    return compress(compressed.slice(1));
+  }
+  // otherwise if it isnt equal, take the first element and concatenate with the rest of the list
+  return [compressed.shift()].concat(compress(compressed));
+}
 
 // 33. Augment every element in a list with a new value where each element is an array
 // itself.
