@@ -196,12 +196,25 @@ let buildList = function(value, length) {
 // For numbers which are multiples of both three and five, output “FizzBuzz” instead of the number.
 // fizzBuzz(5) // ['1','2','Fizz','4','Buzz']
 let fizzBuzz = function(n) {
+  if (n === 1) return '1';
+  let fizzOrBuzz;
+  if (n % 3 === 0 && n % 5 === 0) {
+    fizzOrBuzz = 'FizzBuzz';
+  } else if (n % 3 === 0) {
+    fizzOrBuzz = 'Fizz';
+  } else if (n % 5 === 0) {
+    fizzOrBuzz = 'Buzz';
+  } else {
+    fizzOrBuzz = n.toString();
+  }
+  return Array.from(fizzBuzz(n - 1)).concat(fizzOrBuzz);
 };
 
 // 20. Count the occurence of a value in a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 let countOccurrence = function(array, value) {
+
 };
 
 // 21. Write a recursive version of map.
