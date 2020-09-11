@@ -450,6 +450,7 @@ let numToText = function(str) {
 // *** EXTRA CREDIT ***
 
 // 37. Return the number of times a tag occurs in the DOM.
+// was only able to pass all tests AFTER using a closure -- part2.js was not passing in 'tags' variable as a parameter
 let tagCount = function(tag, node) {
   if (!node) {
     node = document.getElementById('tagCountTest');
@@ -522,4 +523,14 @@ let mergeSort = function(array) {
 // console.log(obj2); // {a:1,b:{bb:{bbb:2}},c:3}
 // obj1 === obj2 // false
 let clone = function(input) {
+  let obj = {};
+  if (typeof input !== 'object' || input === null) return input;
+  if (Array.isArray(input)) {
+    obj = [];
+  } 
+  for (let key in input) {
+    const val = input[key];
+    obj[key] = clone(val);
+  }
+  return obj;
 };
