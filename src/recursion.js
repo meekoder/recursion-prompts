@@ -15,14 +15,14 @@ let factorial = function(n) {
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 let sum = function(array) {
-  if (array.length === 0) return 0;
+  if (!array.length) return 0;
   return array[0] + sum(array.slice(1));
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 let arraySum = function(array) {
-  if (array.length === 0) return 0;
+  if (!array.length) return 0;
   let sum = 0;
   for (let i = 0; i < array.length; i++) {
     if (Array.isArray(array[i])) {
@@ -36,7 +36,7 @@ let arraySum = function(array) {
 
 // 4. Check if a number is even.
 let isEven = function(n) {
-  if (n === 0) return true;
+  if (!n) return true;
   if (n === 1) return false;
   return isEven(Math.abs(n) - 2);
 };
@@ -45,11 +45,11 @@ let isEven = function(n) {
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 let sumBelow = function(n) {
-  if (n === 0) return 0;
+  if (!n) return 0;
   if (n < 0) {
     return (n + 1) + sumBelow(n + 1);
   }
-  return (Math.abs(n) - 1) + sumBelow(Math.abs(n) - 1);
+  return (n - 1) + sumBelow(n - 1);
 };
 
 // 6. Get the integers within a range (x, y).
@@ -58,15 +58,15 @@ let range = function(x, y) {
   if (x + 1 === y || x - 1 === y || x === y) {
     return [];
   }
+  let num;
   if (x > y) {
-    const num = range(x - 1, y);
+    num = range(x - 1, y);
     num.unshift(x - 1);
-    return num;
   } else {
-    const num = range(x + 1, y);
+    num = range(x + 1, y);
     num.unshift(x + 1);
-    return num;
   }
+  return num;
 };
 
 // 7. Compute the exponent of a number.
@@ -75,12 +75,8 @@ let range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 let exponent = function(base, exp) {
-  if (exp === 0) {
-    return 1;
-  }
-  if (exp === 1) {
-    return base;
-  }
+  if (!exp) return 1;
+  if (exp === 1) return base;
   if (exp < 0) {
     return parseFloat((1 / base * exponent(base, exp + 1)).toFixed(5));
   }
@@ -92,17 +88,14 @@ let exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 let powerOfTwo = function(n) {
+  if (!n || n !== parseInt(n)) return false;
   if (n === 1) return true;
-  if (n === 0) return false;
-  if (n !== parseInt(n)) return false;
   return powerOfTwo(n / 2);
 };
 
 // 9. Write a function that reverses a string.
 let reverse = function(string) {
-  if (string.length === 0) {
-    return '';
-  }
+  if (!string.length) return string;
   return reverse(string.substring(1)) + string[0];
 };
 
@@ -110,9 +103,8 @@ let reverse = function(string) {
 let palindrome = function(string) {
   string = string.toLowerCase();
   if (string[0] !== string[string.length - 1]) return false;
-  if (string.length === 0 || string.length === 1) return true;
-  const trimString = string.substring(1, string.length -1)
-  return palindrome(trimString);
+  if (!string.length || string.length === 1) return true;
+  return palindrome(string.slice(1, string.length - 1));
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -165,21 +157,21 @@ let gcd = function(x, y) {
 // compareStr('tomato', 'tomato') // true
 let compareStr = function(str1, str2) {
   if (str1[0] !== str2[0]) return false;
-  if (str1 === '' && str2 === '') return true;
-  return compareStr(str1.substring(1), str2.substring(1));
+  if (!str1.length && !str2.length) return true;
+  return compareStr(str1.slice(1), str2.slice(1));
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 let createArray = function(str) {
-  if (str === '') return [];
-  return Array.from(str[0]).concat(createArray(str.substring(1)));
+  if (!str.length) return [];
+  return [str[0]].concat(createArray(str.slice(1)));
 };
 
 // 17. Reverse the order of an array
 let reverseArr = function(array) {
-  if (array.length === 0) return [];
-  return Array.from(reverseArr(array.slice(1))).concat(array[0]);
+  if (!array.length) return [];
+  return [...reverseArr(array.slice(1))].concat(array[0]);
 };
 
 // 18. Create a new array with a given value and length.
@@ -207,7 +199,7 @@ let fizzBuzz = function(n) {
   } else {
     fizzOrBuzz = n.toString();
   }
-  return Array.from(fizzBuzz(n - 1)).concat(fizzOrBuzz);
+  return [...fizzBuzz(n - 1)].concat(fizzOrBuzz);
 };
 
 // 20. Count the occurence of a value in a list.
@@ -225,7 +217,7 @@ let countOccurrence = function(array, value) {
 // 21. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 let rMap = function(array, callback) {
-  if (array.length < 1) return [];
+  if (!array.length) return array;
   return [callback(array[0])].concat(rMap(array.slice(1), callback));
 };
 
@@ -286,7 +278,7 @@ let replaceKeysInObj = function(obj, oldKey, newKey) {
 // fibonacci(5); // [0,1,1,2,3,5]
 // Note: The 0 is not counted.
 let fibonacci = function(n) {
-  if (n < 0 || !n) return null;
+  if (n < 1) return null;
   if (n === 1) return [0, 1];
   let fibNums = fibonacci(n - 1);
   fibNums.push(fibNums[fibNums.length - 1] + fibNums[fibNums.length - 2]);
@@ -300,7 +292,6 @@ let fibonacci = function(n) {
 // nthFibo(3); // 2
 let nthFibo = function(n) {
   if (n < 0) return null;
-  if (!n) return 0;
   if (n === 1) return 1;
   return nthFibo(n - 1) + nthFibo(n - 2);
 };
@@ -309,14 +300,14 @@ let nthFibo = function(n) {
 // let words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
 let capitalizeWords = function(array) {
-  if (!array.length) return [];
+  if (!array.length) return array;
   return [array[0].toUpperCase()].concat(capitalizeWords(array.slice(1)));
 };
 
 // 28. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car','poop','banana']); // ['Car','Poop','Banana']
 let capitalizeFirst = function(array) {
-  if (!array.length) return [];
+  if (!array.length) return array;
   const capital = array[0][0].toUpperCase() + array[0].slice(1);
   return [capital].concat(capitalizeFirst(array.slice(1)));
 }
@@ -438,10 +429,10 @@ let numToText = function(str) {
     9: 'nine'
   };
   if (!str.length) return str;
-  let firstChar = str[0];
+  const firstChar = str[0];
   const convertStr = Number.parseInt(firstChar);
   if (Number.isInteger(convertStr)) {
-    return nums[convertStr] + numToText(str.substring(1));
+    return nums[convertStr] + numToText(str.slice(1));
   }
   return firstChar + numToText(str.slice(1));
 };
