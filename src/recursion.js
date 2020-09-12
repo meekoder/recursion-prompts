@@ -441,7 +441,7 @@ let numToText = function(str) {
 // *** EXTRA CREDIT ***
 
 // 37. Return the number of times a tag occurs in the DOM.
-// was only able to pass all tests AFTER using a closure -- part2.js was not passing in 'tags' variable as a parameter
+// was only able to pass all tests AFTER using a closure -- part2.js was not passing in the 'tags' variable as a parameter when calling tagCount
 let tagCount = function(tag, node) {
   if (!node) {
     node = document.getElementById('tagCountTest');
